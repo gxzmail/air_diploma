@@ -1,0 +1,65 @@
+1.主线：
+ApplReadScript.java -- 加载直线
+
+2. ApplCaseScript 和 ApplCaseStepScript的类关系
+ApplCaseScript 的作用是获得XXXD_ONXX_.xls中的记录，即定位到哪个xls(待确定)
+ApplCaseStepScript 的作用是根据NGTS_AM_AIR_ON05_001_002_CV01.xls 去读取里面每行的内容(待确定)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1.2 加载问题修复：
+1.2.1 NGTS_AM_AIR_ON05_001_001_CV01.xls中交易日不填会报错
+初步解决办法(待确认)：ApplCaseSteps.java 中readCaseStep函数中对交易日字段进行校验，不允许为空。具体代码如下：
+if(values.get("交易日").toString().isEmpty())
+                    {
+                    	Logger.getLogger(ApplConstValues.logName).
+                    	  log(Level.SEVERE, "步骤{0}的交易日字段为空",caseDetail.getCaseId()+"_"+
+               		         values.get("脚本编号").toString());
+                    	return false;
+                    }
+1.2.2 NGTS_AM_AIR_ON05_001_001_CV01.xls中其它字段若允许为空，初步推断应该也是修改该函数(待确认)
+
+
+需解决问题：
+1. xls修改后需重启AIR才生效
+2. 高版本的java载入后乱序
+3. 串行改为并行
+4. 内容为空，会载入显示，但是执行到该批会爆红
+
+
+
+
+
+
+
+
+
+
+air_1.0.0 和air_1.0.2已有文件内容一致。但是air_1.0.2多出如下文件：
+F:\zAir\原始\AIR_1.0.2\src\hibernate.cfg.xml
+F:\zAir\原始\AIR_1.0.2\src\core\guilog\LabelLogAppender.java
+F:\zAir\原始\AIR_1.0.2\src\core\guilog\LogAppender.java
+F:\zAir\原始\AIR_1.0.2\src\core\guilog\test\LogDemoJFrame.java
+F:\zAir\原始\AIR_1.0.2\src\core\guilog\TextAreaLogAppender.java
+
+调用关系：
+
+
+
+
+
+air1.0.5 
+ApplReadScript.java 对应的文件为 ExcelHndl.java
